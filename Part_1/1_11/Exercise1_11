@@ -1,5 +1,5 @@
-docker build . -t ex11
-docker run -it -d --rm -p 8080:8080 ex11
+docker build . -t ex111
+docker run -it -d --rm -p 8080:8080 ex111
 curl localhost:8080
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
