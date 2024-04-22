@@ -1,0 +1,17 @@
+---
+services:
+  frontend:
+    image: ex112
+    ports:
+      - 5000:5000
+
+  backend:
+    image: ex113
+    ports:
+      - 8080:8080
+    environment:
+      - REDIS_HOST=redis
+
+  redis:
+    image: redis
+    restart: unless-stopped

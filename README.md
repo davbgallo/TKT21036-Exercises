@@ -3,6 +3,7 @@ Exercises from course https://devopswithdocker.com/
 
 ## Exercises
 [Part 1](Part_1/)
+[Part 2](Part_2/)
 
 ## Environment Information
 **OS**: AlmaLinux release 9.3 (Shamrock Pampas Cat)
@@ -264,3 +265,6 @@ To specify UDP: `-p <host-port>:<container-port>/udp``
 **SECURITY**: Limit scope of ports (e.g. localhost). By default target is 0.0.0.0
 `-p 127.0.0.1:3456:3000`
 
+## PART 2
+
+to understand better the loadbalancer and docker.sock functionality (exercise 05)

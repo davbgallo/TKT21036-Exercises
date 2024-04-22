@@ -1,0 +1,11 @@
+# Description
+after spending way too much time, my solution has been to override ENV vars in Dockerfile for both frontend and backend
+- Frontend: ENV REACT_APP_BACKEND_URL=http://localhost/api
+- Backend: ENV REQUEST_ORIGIN=http://localhost
+
+this is needed as by the schema in exercise 2.8 the NGINX has to proxy the communications between these 2 containers
+
+I still don't understand why I could not override the environment section in docker-compose.yml. Instead I build the Dockerfile directly with docker compose and I pass the ENV as ARG. Probably is due to the base layer
+
+This is also the solution for Exercise 2.10.
+

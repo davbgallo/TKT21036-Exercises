@@ -1,0 +1,24 @@
+---
+services:
+  frontend:
+    image: ex112
+    ports:
+      - 5000:5000
+
+  backend:
+    image: ex113
+    ports:
+      - 8080:8080
+    environment:
+      - REDIS_HOST=redis
+      - POSTGRES_HOST=db
+      - POSTGRES_PASSWORD=supersecret
+
+  redis:
+    image: redis
+    restart: unless-stopped
+
+  db:
+    image: postgres:13.2-alpine
+    environment:
+      POSTGRES_PASSWORD: supersecret

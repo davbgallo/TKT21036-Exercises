@@ -1,0 +1,3 @@
+#cd scaling-exercise 
+docker compose up -d --scale compute=3
+#url compute.localtest.me:3000

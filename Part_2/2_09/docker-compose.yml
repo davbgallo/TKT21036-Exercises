@@ -1,0 +1,39 @@
+---
+services:
+  frontend:
+    image: ex209front
+    build:
+      context: ./example-frontend
+      args:
+        - REACT_APP_BACKEND_URL=http://localhost/api
+
+  backend:
+    image: ex209back
+    environment:
+      - REDIS_HOST=redis
+      - POSTGRES_HOST=db
+      - POSTGRES_PASSWORD=supersecret
+    build:
+      context: ./example-backend
+      args:
+        - REQUEST_ORIGIN=http://localhost
+
+  redis:
+    image: redis
+    restart: unless-stopped
+
+  db:
+    image: postgres:13.2-alpine
+    environment:
+      POSTGRES_PASSWORD: supersecret
+    volumes:
+      - ./database:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  proxy:
+    image: nginx
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf 
+    restart: unless-stopped
