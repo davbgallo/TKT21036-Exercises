@@ -1,11 +1,13 @@
 # TKT21036-Exercises
 Exercises from course https://devopswithdocker.com/
+
 ## Exercises
 [Part 1](Part_1/)
 
 ## Environment Information
-OS: AlmaLinux release 9.3 (Shamrock Pampas Cat)
-Docker info:
+**OS**: AlmaLinux release 9.3 (Shamrock Pampas Cat)
+
+**Docker info**:
 ```
 Client: Docker Engine - Community
  Version:    26.0.2
@@ -60,7 +62,7 @@ Server:
   127.0.0.0/8
  Live Restore Enabled: false
 ```
-
+# Personal notes from the course
 ## PART 1
 ### Defiitions and basic concepts
 Basic run of a container: `docker container run hello-world` or `docker run hello-world`
@@ -74,6 +76,7 @@ Basic run of a container: `docker container run hello-world` or `docker run hell
 
 ##### Maintenance
 to remove an image you need to remove the container first!
+
 **STOP CONTAINER > REMOVE CONTAINER > REMOVE IMAGE**
 ```
 docker ps -a
@@ -86,7 +89,9 @@ docker rm $$IMAGE$$
 TIP: when you remove a container you can use the first character of the string, you don't need to type the whole ID.
 
 To remove all stopped containers: `docker system prune`
+
 To remove all images not attached to a container AND without a name: `docker image prune`
+
 NB: If the images have a name, you need to add `-a`
 
 some containers are not stopped by SIGTERM sent by stop, so we need to
@@ -96,7 +101,8 @@ docker rm $$CONTAINER$$
 ```
 #### Images
 Image is a file that **NEVER** changes. It can be layered (e.g. using an image as a base for another image).
-composed by registry/organisation/image:tag
+
+composed by *registry/organisation/image:tag*
 
 To check local images available: `docker image ls`
 to create an image you need a `Dockerfile`, parsed by `docker image build`
@@ -109,13 +115,18 @@ CMD <command that is executed on `docker container run`>
 ```
 
 To download images without running them: `docker image pull`
+
 to search for an image: `docker search`
+
 By default it searches only on docker hub. To add Quay: `docker search quay.io/hello`
+
 Tag are used to download specific version of an image: `docker pull ubuntu:22.04`
+
 You can also use tags internally: `docker tag ubuntu:22.04 ubuntu:jammy_jellyfish`
 
 ##### Dockerfile
 Dockerfile is simply a file that contains the build instructions for an image. You define what should be included in the image with different instructions. We'll learn about the best practices here by creating one.
+
 Script example
 ```
 cat <<'EOF' >> hello.sh
@@ -170,18 +181,23 @@ During the build we see from the output that there are three steps: [1/3], [2/3]
 Layers have multiple functions. We often try to limit the number of layers to save on storage space but layers can work as a cache during build time. If we just edit the last lines of Dockerfile the build command can start from the previous layer and skip straight to the section that has changed. COPY automatically detects changes in the files, so if we change the hello.sh it'll run from step 3/3, skipping 1 and 2. This can be used to create faster build pipelines.
 
 To copy files to an existing container or viceversa: `docker cp ./additional.txt $$CONTAINER_NAME$$:/usr/src/app/`
+
 To see differences made in a container: `docker diff $$CONATINER_NAME$$`
+
 After incorporating modifications to my Dockerfile: `docker build . -t hello-docker:v2`
+
 NB: `CMD` instruction is not runned during build but at runtime!
 
 We should always try to keep the most prone to change rows at the bottom, by adding the instructions to the bottom we can preserve our cached layers - this is a handy practice to speed up the build process when there are time-consuming operations like downloads in the Dockerfile
-We need a way to have something before the command. Luckily we have a way to do this: we can use ENTRYPOINT to define the main executable and then Docker will combine our run arguments for it.
+
+If we need a way to have something before the command. Luckily we have a way to do this: we can use ENTRYPOINT to define the main executable and then Docker will combine our run arguments for it.
 
 ```
 # Replacing CMD with ENTRYPOINT
 ENTRYPOINT ["/usr/local/bin/yt-dlp"]
 ```
 `docker run yt-dlp https://www.youtube.com/watch?v=XsqlHHTGQrw`
+
 With ENTRYPOINT docker run now executed the combined /usr/local/bin/yt-dlp https://www.youtube.com/watch?v=uTZSILGTskA inside the container!
 
 ENTRYPOINT vs CMD can be confusing - in a properly set up image, such as our yt-dlp, the command represents an argument list for the entrypoint. By default, the entrypoint in Docker is set as /bin/sh -c and this is passed if no entrypoint is set. This is why giving the path to a script file as CMD works: you're giving the file as a parameter to /bin/sh -c.
@@ -199,20 +215,26 @@ In the shell form, the command is provided as a string without brackets. In the 
 
 #### Containers
 Only contains what reqtuired to execute an application (e.g. python libs)
+
 Isolated environment that communicate with host/each other via TCP/UDP
 
 to list all running containers `docker container ls`. Add `-a` to list previously run containers
+
 Alias: `docker ps`
 
 When running a container add `-d` otherwise you can't interact with your shell
+
 To interact with the container shell, you need `-it`
 - `-t`: Creates a tty (eli5 another shell)
 - `-i`: Forwards STDIN to the new created shell with `-t`
+
 `docker run -d -it --name looper ubuntu sh -c 'while true; do date; sleep 1; done'`
 To check if it is running, we can use `docker logs -f looper`
 
 You can attach to the same contained process multiple times simultaneously, screen sharing style, or quickly view the progress of your detached process. You connect to the MAIN container process
+
 NB: When you exit you are killing the container! You need to detach/attach with `CTRL-p CTRL-q`
+
 `docker attach --no-stdin looper` will print only the STDOUT but we won't be able to interact with the shell
 
 Docker exec make you run a command inside a container, and you can connect to a separate TTY, so when you exit you don't kill the container
