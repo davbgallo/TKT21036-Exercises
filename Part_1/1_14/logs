@@ -1,0 +1,15 @@
+#Front
+ HTTP  4/22/2024 1:54:14 PM 172.17.0.1 GET /
+ HTTP  4/22/2024 1:54:14 PM 172.17.0.1 Returned 304 in 2 ms
+ HTTP  4/22/2024 1:54:14 PM 172.17.0.1 GET /static/css/main.eaa5d75e.chunk.css
+ HTTP  4/22/2024 1:54:14 PM 172.17.0.1 Returned 304 in 1 ms
+ HTTP  4/22/2024 1:54:14 PM 172.17.0.1 GET /static/js/2.43ca3586.chunk.js
+ HTTP  4/22/2024 1:54:14 PM 172.17.0.1 Returned 304 in 1 ms
+ HTTP  4/22/2024 1:54:14 PM 172.17.0.1 GET /static/js/main.667b6e84.chunk.js
+ HTTP  4/22/2024 1:54:14 PM 172.17.0.1 Returned 304 in 2 ms
+ HTTP  4/22/2024 1:54:14 PM 172.17.0.1 GET /static/media/toskalogo.c0f35cf0.svg
+ HTTP  4/22/2024 1:54:14 PM 172.17.0.1 Returned 304 in 1 ms
+ HTTP  4/22/2024 1:54:14 PM 172.17.0.1 GET /static/css/main.eaa5d75e.chunk.css.map
+ HTTP  4/22/2024 1:54:14 PM 172.17.0.1 Returned 304 in 1 ms
+#Back
+[GIN] 2024/04/22 - 13:54:18 | 200 |      29.961µs |      172.17.0.1 | GET      "/ping"

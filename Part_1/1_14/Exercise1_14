@@ -1,0 +1,6 @@
+docker run -it -d --rm -p 5000:5000 ex12:v3
+docker run -it -d --rm -p 8080:8080 ex13
+#docker ps
+#CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS          PORTS                                       NAMES
+#8c189063d529   ex12:v3   "docker-entrypoint.s…"   4 minutes ago    Up 4 minutes    0.0.0.0:5000->5000/tcp, :::5000->5000/tcp   naughty_kalam
+#a8325523f84d   ex13      "/bin/sh -c ./server"    16 minutes ago   Up 16 minutes   0.0.0.0:8080->8080/tcp, :::8080->8080/tcp   angry_euler

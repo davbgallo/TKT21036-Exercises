@@ -1,0 +1,3 @@
+docker run -p 8080:8080 -d web-server
+curl localhost:8080
+{"message":"You connected to the following path: /","path":"/"}

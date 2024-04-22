@@ -1,0 +1,7 @@
+#for i in $(seq 1 3); do docker run -d --name nginx$i nginx; done
+#for i in $(seq 2 3); do docker stop nginx$i; done
+docker ps -a
+CONTAINER ID   IMAGE     COMMAND                  CREATED         STATUS                       PORTS     NAMES
+c6867438c519   nginx     "/docker-entrypoint.…"   2 minutes ago   Exited (0) 34 seconds ago              nginx3
+6e8fe9c1e448   nginx     "/docker-entrypoint.…"   2 minutes ago   Exited (0) 34 seconds ago              nginx2
+dc9a9d57741c   nginx     "/docker-entrypoint.…"   2 minutes ago   Up 2 minutes                 80/tcp    nginx1

@@ -1,0 +1,4 @@
+docker build . -t ex13
+docker run -it -d --rm -p 8080:8080 ex13
+curl localhost:8080/ping
+pong
