@@ -4,6 +4,7 @@ Exercises from course https://devopswithdocker.com/
 ## Exercises
 [Part 1](Part_1/)
 [Part 2](Part_2/)
+[Part 3](Part_3/)
 
 ## Environment Information
 **OS**: AlmaLinux release 9.3 (Shamrock Pampas Cat)
@@ -267,4 +268,40 @@ To specify UDP: `-p <host-port>:<container-port>/udp``
 
 ## PART 2
 
-to understand better the loadbalancer and docker.sock functionality (exercise 05)
+Just what learned in Part 1 but applied to docker compose.
+
+NB: docker.sock makes me able to command docker as I would do via CLI
+
+## PART 3
+
+CI/CD pipeline (sometimes called deployment pipeline) is a corner stone of DevOps. According to Gitlab:
+
+CI/CD automates much or all of the manual human intervention traditionally needed to get new code from a commit into production. With a CI/CD pipeline, development teams can make changes to code that are then automatically tested and pushed out for delivery and deployment. Get CI/CD right and downtime is minimized and code releases happen faster.
+
+GitHub Actions is a continuous integration and continuous delivery (CI/CD) platform that allows you to automate your build, test, and deployment pipeline. You can create workflows that build and test commit and every pull request to your repository, or deploy merged pull requests to production.
+
+GitHub Actions are doing only the "first half" of the deployment pipeline: they are ensuring that every push to GitHub is built to a Docker image which is then pushed to Docker Hub.
+
+The other half of the deployment pipeline is implemented by a containerized service called Watchtower which is an open-source project that automates the task of updating images. Watchtower will pull the source of the image (in this case Docker Hub) for changes in the containers that are running. The container that is running will be updated and automatically restarted when a new version of the image is pushed to Docker Hub. Watchtower respects tags e.g. q container using ubuntu:22.04 will not be updated unless a new version of ubuntu:22.04 is released.
+
+### Security
+add a non-root user to our container and run our process with that user. Another option would be to map the root user to a high, non-existing user id on the host with https://docs.docker.com/engine/security/userns-remap/, and can be used in case you must use root within the container.
+
+```
+FROM ubuntu:22.04
+
+WORKDIR /mydir
+
+RUN apt-get update && apt-get install -y curl python3
+RUN curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp
+RUN chmod a+x /usr/local/bin/yt-dlp
+
+
+### THIS IS WHAT WE CHANGED
+RUN useradd -m appuser
+RUN chown appuser . #I do it here because I am still root
+USER appuser
+### AFTER THIS LINE EVERYTHING IS EXECUTED AS appuser
+
+ENTRYPOINT ["/usr/local/bin/yt-dlp"]
+```

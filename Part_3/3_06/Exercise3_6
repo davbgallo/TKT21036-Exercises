@@ -1,0 +1,6 @@
+docker image ls
+REPOSITORY   TAG       IMAGE ID       CREATED          SIZE
+ex306back    latest    8adefab1d243   2 minutes ago    995MB
+ex306front   latest    2ed1e9c6fcee   8 minutes ago    1.1GB
+ex305back    latest    04c21a7cc390   17 minutes ago   1.07GB
+ex305front   latest    638697746709   23 minutes ago   1.27GB

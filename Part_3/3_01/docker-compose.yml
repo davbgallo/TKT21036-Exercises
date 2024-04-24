@@ -1,0 +1,14 @@
+---
+services:
+  course-express-app:
+    image: davbgallo/course-express-app
+    ports:
+      - 8080:8080
+    restart: unless-stopped
+
+  watchtower:
+    image: containrrr/watchtower
+    environment:
+      - WATCHTOWER_POLL_INTERVAL=30
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock

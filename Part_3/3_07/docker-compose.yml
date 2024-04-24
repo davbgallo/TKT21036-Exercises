@@ -1,0 +1,15 @@
+---
+services:
+  frontend:
+    image: ex306front
+    ports:
+      - 5000:5000
+    build:
+      context: ./example-frontend
+
+  backend:
+    image: ex306back
+    ports:
+      - 8080:8080
+    build:
+      context: ./example-backend
